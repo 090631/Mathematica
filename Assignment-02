@@ -1,3 +1,32 @@
+2(a)
+f[x_] := 
+  Piecewise[{{1/(x + 2), 
+     x < -2}, {x^2 - 5, -2 <= x <= 3}, {Sqrt[x + 13], x > 3}}];
+breakpoints = {-2, 0, 3};
+continuityCheck = 
+  Table[{x0, Limit[f[x], x -> x0, Direction -> -1], 
+    Limit[f[x], x -> x0, Direction -> 1], 
+    If[Limit[f[x], x -> x0, Direction -> -1] == 
+      Limit[f[x], x -> x0, Direction -> 1], "Yes", "No"]}, {x0, 
+    breakpoints}];
+TableForm[continuityCheck, 
+ TableHeadings -> {None, {"x0", "Left Limit", "Right Limit", 
+    "Continuous?"}}]
+Show[
+ Plot[{1/(x + 2)}, {x, -5, -2}, PlotLegends -> {1/(x + 2)}],
+ Plot[{Style[x^2 - 5, Orange]}, {x, -2, 3}, 
+  PlotLegends -> {x^2 - 5}],
+ Plot[{Style[\[Sqrt](x + 13), Brown]}, {x, 3, 5}, 
+  PlotLegends -> {\[Sqrt](x + 13)}],
+ PlotRange -> {Automatic, {-5, 5}}
+ ]
+
+2(b)
+v[t_] := 190*(1 - E^(-0.168*t))
+c = Limit[v[t], t -> Infinity];
+Plot[{v[t], c}, {t, 0, 50}]
+(*Physical significance:terminal velocity*)
+
 7(a)
 CscMc[x_, n_] := Normal[Series[Csc[t] - 1, {t, 0, n}]] /. t -> x ;
 CosMc[x_, n_] := Normal[Series[Cos[t], {t, 0, n}]] /. t -> x  ;
