@@ -1,0 +1,15 @@
+CscMc[x_, n_] := Normal[Series[Csc[t] - 1, {t, 0, n}]] /. t -> x ;
+CosMc[x_, n_] := Normal[Series[Cos[t], {t, 0, n}]] /. t -> x  ;
+CscPlotTable = Flatten[{Table[CscMc[x, n], {n, 1, 7, 2}], Csc[x]}];
+CosPlotTable = Flatten[{Table[CosMc[x, n], {n, 1, 7, 2}], Cos[x]}];
+
+TableForm[
+ {N[Table[Csc[Pi/4] - CscMc[Pi/4, n], {n, 1, 7, 2}], 5]},
+ TableHeadings -> {None, {"1st order", "3rd order", "5th order", 
+    "7th order"}}
+ ]
+Plot[CscPlotTable, {x, -Pi, Pi}, 
+ PlotStyle -> {Pink, Orange, Brown, Purple, Black},
+ PlotLegends -> {"1st order", "3rd order", "5th order", "7th order", 
+   Csc[x],}
+ ]
