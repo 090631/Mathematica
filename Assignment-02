@@ -1,3 +1,4 @@
+7(a)
 CscMc[x_, n_] := Normal[Series[Csc[t] - 1, {t, 0, n}]] /. t -> x ;
 CosMc[x_, n_] := Normal[Series[Cos[t], {t, 0, n}]] /. t -> x  ;
 CscPlotTable = Flatten[{Table[CscMc[x, n], {n, 1, 7, 2}], Csc[x]}];
@@ -13,3 +14,57 @@ Plot[CscPlotTable, {x, -Pi, Pi},
  PlotLegends -> {"1st order", "3rd order", "5th order", "7th order", 
    Csc[x],}
  ]
+
+
+TableForm[
+ {N[Table[Cos[Pi/4] - CosMc[Pi/4, n], {n, 1, 7, 2}], 5]},
+ TableHeadings -> {None, {"1st order", "3rd order", "5th order", 
+    "7th order"}}
+ ]
+Plot[CosPlotTable, {x, -Pi, Pi}, 
+ PlotStyle -> {Pink, Orange, Brown, Purple, Black},
+ PlotLegends -> {"1st order", "3rd order", "5th order", "7th order", 
+   Cos[x]},
+ PlotRange -> {Automatic, {-Pi/2, Pi/2}}
+ ]
+
+7(b)
+lnT[x_, n_] := Normal[Series[Log[t], {t, 2, n}]] /. t -> x ;
+ET[x_, n_] := Normal[Series[Exp[-2 t], {t, 0, n}]] /. t -> x ;
+SinT[x_, n_] := Normal[Series[Sin[t], {t, Pi/2, n}]] /. t -> x ;
+lnTPlotTable = Flatten[{Table[lnT[x, n], {n, 1, 4}], Log[x]}]; 
+ETPlotTable = Flatten[{Table[ET[x, n], {n, 1, 4}], Exp[-2 x]}]; 
+SinTPlotTable = Flatten[{Table[SinT[x, n], {n, 1, 4}], Sin[x]}]; 
+Plot[
+ lnTPlotTable, {x, 0, 10}, 
+ PlotStyle -> {Pink, Orange, Brown, Purple, Black},
+ PlotLegends -> {"1st order", "2nd order", "3rd order", "4th order", 
+   "ln[x]"}
+ ]
+Plot[
+ ETPlotTable, {x, -5, 5}, 
+ PlotStyle -> {Pink, Orange, Brown, Purple, Black},
+ PlotLegends -> {"1st order", "2nd order", "3rd order", "4th order", 
+   "Exp[-2x]"}
+ ]
+Plot[
+ SinTPlotTable, {x, -5, 5}, 
+ PlotStyle -> {Pink, Orange, Brown, Purple, Black},
+ PlotLegends -> {"1st order", "2nd order", "3rd order", "4th order", 
+   "Sin[x]"}
+ ]
+
+8(a)
+f[x_] := x^3/4 + 1;
+(i)
+secantL[x_] = Fit[{{0, f[0]}, {2, f[2]}}, {1, x}, x]
+(ii)
+\[Xi] = Solve[{f'[x] == (f[2] - f[0])/(2 - 0), 0 < x < 2}, x]
+(iii)
+tangentL[c_, x_] = f[c] + f'[c] (x - c)
+(iv)
+Plot[{f[x], secantL[x], tangentL[2/Sqrt[3], x]}, {x, 0, 2}]
+8(b)
+g[x_] := Log[-x^2 + 2 x + 4];
+\[Xi] = Solve[g'[x] == 0, x]
+Plot[{g[x], g[1]}, {x, -1, 3}]
